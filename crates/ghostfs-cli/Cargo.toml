@@ -16,9 +16,9 @@ name = "ghost"
 path = "src/main.rs"
 
 [dependencies]
-ghostfs-core = { path = "../ghostfs-core", version = "0.1.0" }
-ghostfs-store = { path = "../ghostfs-store", version = "0.1.0" }
-ghostfs-registry = { path = "../ghostfs-registry", version = "0.1.0" }
+ghostfs-core = { path = "../ghostfs-core", version = "1.0.0" }
+ghostfs-store = { path = "../ghostfs-store", version = "1.0.0" }
+ghostfs-registry = { path = "../ghostfs-registry", version = "1.0.0" }
 clap = { version = "4", features = ["derive"] }
 tokio = { version = "1", features = ["full"] }
 anyhow = "1"

@@ -24,7 +24,7 @@ pub struct Manifest {
 }
 
 fn default_version() -> String {
-    "0.1.0".to_string()
+    "1.0.0".to_string()
 }
 
 impl Manifest {
@@ -32,7 +32,7 @@ impl Manifest {
     pub fn new(name: &str) -> Self {
         Self {
             name: name.to_string(),
-            version: "0.1.0".to_string(),
+            version: "1.0.0".to_string(),
             description: None,
             dependencies: BTreeMap::new(),
             dev_dependencies: BTreeMap::new(),
@@ -98,7 +98,7 @@ mod tests {
     fn test_manifest_manipulation() {
         let mut manifest = Manifest::new("my-test-app");
         assert_eq!(manifest.name, "my-test-app");
-        assert_eq!(manifest.version, "0.1.0");
+        assert_eq!(manifest.version, "1.0.0");
         assert!(manifest.dependencies.is_empty());
 
         // Add dependencies
