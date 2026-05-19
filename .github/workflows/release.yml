@@ -22,22 +22,18 @@ jobs:
             os: windows-latest
             archive: zip
             ext: .exe
-            npm_pkg: ghostfs-win32-x64
           - target: x86_64-unknown-linux-gnu
             os: ubuntu-latest
             archive: tar.gz
             ext: ""
-            npm_pkg: ghostfs-linux-x64
           - target: x86_64-apple-darwin
             os: macos-latest
             archive: tar.gz
             ext: ""
-            npm_pkg: ghostfs-darwin-x64
           - target: aarch64-apple-darwin
             os: macos-latest
             archive: tar.gz
             ext: ""
-            npm_pkg: ghostfs-darwin-arm64
 
     steps:
       - uses: actions/checkout@v4
@@ -72,20 +68,8 @@ jobs:
           name: ghost-${{ matrix.target }}
           path: ghost-${{ matrix.target }}.${{ matrix.archive }}
 
-      - name: Prepare NPM package directory
-        shell: bash
-        run: |
-          mkdir -p npm/${{ matrix.npm_pkg }}
-          cp target/${{ matrix.target }}/release/ghost${{ matrix.ext }} npm/${{ matrix.npm_pkg }}/
-
-      - name: Upload NPM artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: npm-${{ matrix.npm_pkg }}
-          path: npm/${{ matrix.npm_pkg }}
-
   release:
-    name: Create Release & Publish NPM
+    name: Create Release
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -97,14 +81,6 @@ jobs:
           path: artifacts
           merge-multiple: true
 
-      # Download all platform package binary artifacts
-      - name: Download NPM Packages
-        uses: actions/download-artifact@v4
-        with:
-          path: npm-packages
-          pattern: npm-*
-          merge-multiple: false
-
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
@@ -112,33 +88,3 @@ jobs:
           files: artifacts/ghost-*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # Set up Node.js
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          registry-url: 'https://registry.npmjs.org'
-
-      # Move platform binaries to the correct folders under npm/
-      - name: Prepare NPM Packages
-        run: |
-          cp -r npm-packages/npm-ghostfs-win32-x64/* npm/ghostfs-win32-x64/ || true
-          cp -r npm-packages/npm-ghostfs-linux-x64/* npm/ghostfs-linux-x64/ || true
-          cp -r npm-packages/npm-ghostfs-darwin-x64/* npm/ghostfs-darwin-x64/ || true
-          cp -r npm-packages/npm-ghostfs-darwin-arm64/* npm/ghostfs-darwin-arm64/ || true
-
-      # Publish all packages to NPM registry
-      - name: Publish to NPM
-        run: |
-          npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN
-          
-          # Publish platform-specific packages
-          cd npm/ghostfs-win32-x64 && npm publish --access public || echo "win32 failed"
-          cd ../ghostfs-linux-x64 && npm publish --access public || echo "linux failed"
-          cd ../ghostfs-darwin-x64 && npm publish --access public || echo "darwin-x64 failed"
-          cd ../ghostfs-darwin-arm64 && npm publish --access public || echo "darwin-arm64 failed"
-          
-          # Publish main wrapper package
-          cd ../ghostfs && npm publish --access public
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

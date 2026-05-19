@@ -45,13 +45,7 @@ project/                           project/
 
 ## Installation
 
-### Via npm (Recommended)
-
-```bash
-npm install -g ghostfs
-```
-
-### Via Shell Script (Alternative)
+### Quick Install (Recommended)
 
 **Windows (PowerShell):**
 
