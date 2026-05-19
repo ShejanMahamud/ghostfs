@@ -1,6 +1,7 @@
 pub mod add;
 pub mod clean;
 pub mod create;
+pub mod dlx;
 pub mod hooks;
 pub mod init;
 pub mod install;

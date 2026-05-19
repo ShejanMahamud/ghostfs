@@ -37,6 +37,7 @@ enum Commands {
     },
 
     /// Add a package to dependencies
+    #[command(alias = "add")]
     Add {
         /// Package name (e.g. "react" or "react@19.0.0")
         package: String,
@@ -47,12 +48,14 @@ enum Commands {
     },
 
     /// Remove a package from dependencies
+    #[command(aliases = ["rm", "uninstall"])]
     Remove {
         /// Package name to remove
         package: String,
     },
 
     /// Install all dependencies to the global store
+    #[command(alias = "i")]
     Install {
         /// Also create node_modules/ with symlinks (compatibility mode)
         #[arg(long)]
@@ -66,6 +69,7 @@ enum Commands {
     Unlink,
 
     /// List packages in the global store
+    #[command(alias = "ls")]
     List,
 
     /// Run a script defined in ghost.json
@@ -85,21 +89,36 @@ enum Commands {
         args: Vec<String>,
     },
 
-    /// Show store statistics
+    /// Show store statistics (hidden utility)
+    #[command(hide = true)]
     Status,
 
     /// Clean the global package store
+    #[command(alias = "prune")]
     Clean {
         /// Skip confirmation
         #[arg(long)]
         force: bool,
     },
 
-    /// List available project templates
+    /// List available project templates (hidden utility)
+    #[command(hide = true)]
     Templates,
 
-    /// Install Node.js runtime hooks to allow zero-node_modules resolution
+    /// Install Node.js runtime hooks to allow zero-node_modules resolution (hidden utility)
+    #[command(hide = true)]
     InstallHooks,
+
+    /// Run a package executable from the registry dynamically without installing it locally
+    #[command(alias = "x")]
+    Dlx {
+        /// Package name (e.g. "shadcn" or "create-next-app@latest")
+        package: String,
+
+        /// Additional arguments passed to the binary
+        #[arg(trailing_var_arg = true)]
+        args: Vec<String>,
+    },
 }
 
 #[tokio::main]
@@ -118,7 +137,7 @@ async fn main() {
     let result = match cli.command {
         Commands::Init => commands::init::run(&project_dir),
         Commands::Create { template, name } => {
-            commands::create::run(&project_dir, &template, &name)
+            commands::create::run(&project_dir, &template, &name).await
         }
         Commands::Add { package, dev } => commands::add::run(&project_dir, &package, dev).await,
         Commands::Remove { package } => commands::remove::run(&project_dir, &package),
@@ -140,6 +159,7 @@ async fn main() {
         Commands::Clean { force } => commands::clean::run(force),
         Commands::Templates => commands::create::list_templates(),
         Commands::InstallHooks => commands::hooks::run(),
+        Commands::Dlx { package, args } => commands::dlx::run(&package, &args).await,
     };
 
     if let Err(e) = result {

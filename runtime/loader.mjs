@@ -17,6 +17,17 @@ let _lockfileCache = null;
 function loadLockfile() {
   if (_lockfileCache) return _lockfileCache;
 
+  // Check environment variable override (e.g. for ghost dlx)
+  if (process.env.GHOST_LOCKFILE_PATH && existsSync(process.env.GHOST_LOCKFILE_PATH)) {
+    try {
+      const content = readFileSync(process.env.GHOST_LOCKFILE_PATH, 'utf-8');
+      _lockfileCache = JSON.parse(content);
+      return _lockfileCache;
+    } catch {
+      // Ignore
+    }
+  }
+
   let dir = process.cwd();
   while (true) {
     const lockPath = join(dir, 'ghost.lock');

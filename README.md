@@ -125,9 +125,26 @@ That's it. **No `node_modules` created.** Dependencies are resolved from `~/.gho
 | `ghost list` | Show all packages cached in the global store |
 | `ghost run <script>` | Run a project script with virtual resolution |
 | `ghost dev` | Shortcut for `ghost run dev` |
+| `ghost dlx <pkg> [args...]` | Run a package binary dynamically with zero local install (alias: `ghost x`) |
 | `ghost status` | Show store statistics and hook installation status |
 | `ghost install-hooks` | Install Node.js resolver hooks to bypass `node_modules` |
 | `ghost clean` | Prune the global package store (freed space) |
+
+---
+
+## Dynamic Package Execution (`ghost dlx` / `ghost x`)
+
+Similar to `npx` or `pnpm dlx`, GhostFS allows you to run any executable package directly from the npm registry with zero local installation or project modification:
+
+```bash
+# Initialize shadcn with next template dynamically
+ghost dlx shadcn@latest init --preset b4pkjHSILI --template next
+
+# Run cowsay dynamically
+ghost x cowsay "Hello from GhostFS!"
+```
+
+It dynamically downloads the target package and its dependencies to the global content-addressed store, generates an in-memory lockfile, and spawns the node process virtually. No local files or folders are altered.
 
 ---
 

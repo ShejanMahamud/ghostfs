@@ -28,6 +28,18 @@ let _lockfilePath = null;
 function loadLockfile() {
   if (_lockfileCache) return _lockfileCache;
 
+  // Check environment variable override (e.g. for ghost dlx)
+  if (process.env.GHOST_LOCKFILE_PATH && fs.existsSync(process.env.GHOST_LOCKFILE_PATH)) {
+    try {
+      const content = fs.readFileSync(process.env.GHOST_LOCKFILE_PATH, 'utf-8');
+      _lockfileCache = JSON.parse(content);
+      _lockfilePath = process.env.GHOST_LOCKFILE_PATH;
+      return _lockfileCache;
+    } catch (e) {
+      console.error(`[ghostfs] Failed to parse GHOST_LOCKFILE_PATH:`, e.message);
+    }
+  }
+
   let dir = process.cwd();
   while (true) {
     const lockPath = path.join(dir, 'ghost.lock');
@@ -35,7 +47,7 @@ function loadLockfile() {
       try {
         const content = fs.readFileSync(lockPath, 'utf-8');
         _lockfileCache = JSON.parse(content);
-        _lockfilePath = dir;
+        _lockfilePath = lockPath; // Point directly to the file path
         return _lockfileCache;
       } catch (e) {
         console.error(`[ghostfs] Failed to parse ${lockPath}:`, e.message);

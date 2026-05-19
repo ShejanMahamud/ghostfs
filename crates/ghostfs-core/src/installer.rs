@@ -94,7 +94,7 @@ impl Installer {
     }
 
     /// Download a package tarball, extract it, and store in the content-addressed store.
-    async fn download_and_store(
+    pub async fn download_and_store(
         &self,
         pkg: &ResolvedPackage,
     ) -> Result<ghostfs_store::StoredPackage> {
