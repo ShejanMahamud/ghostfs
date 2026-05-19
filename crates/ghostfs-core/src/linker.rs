@@ -22,9 +22,7 @@ impl Linker {
     pub fn link(&self, project_dir: &Path) -> Result<LinkResult> {
         let lockfile_path = Lockfile::lockfile_path(project_dir);
         if !lockfile_path.exists() {
-            anyhow::bail!(
-                "No ghost.lock found. Run 'ghost install' first."
-            );
+            anyhow::bail!("No ghost.lock found. Run 'ghost install' first.");
         }
 
         let lockfile = Lockfile::load(&lockfile_path)?;
@@ -76,7 +74,11 @@ impl Linker {
             create_link(&link_target, &store_path)
                 .with_context(|| format!("Failed to link {}", name))?;
 
-            debug!("Linked {} -> {}", link_target.display(), store_path.display());
+            debug!(
+                "Linked {} -> {}",
+                link_target.display(),
+                store_path.display()
+            );
             linked += 1;
         }
 
@@ -85,10 +87,7 @@ impl Linker {
 
         info!("Linked {} packages into node_modules/", linked);
 
-        Ok(LinkResult {
-            linked,
-            errors,
-        })
+        Ok(LinkResult { linked, errors })
     }
 
     /// Remove the managed node_modules directory.
@@ -119,12 +118,13 @@ fn create_link(link: &Path, target: &Path) -> Result<()> {
     #[cfg(windows)]
     {
         // Use junction (no admin privileges needed, unlike symlinks on Windows)
-        junction::create(target, link)
-            .with_context(|| format!(
+        junction::create(target, link).with_context(|| {
+            format!(
                 "Failed to create junction: {} -> {}",
                 link.display(),
                 target.display()
-            ))?;
+            )
+        })?;
     }
 
     Ok(())
@@ -136,10 +136,19 @@ fn create_package_lock(node_modules: &Path, lockfile: &Lockfile) -> Result<()> {
 
     for (name, locked_pkg) in &lockfile.packages {
         let mut entry = serde_json::Map::new();
-        entry.insert("version".into(), serde_json::Value::String(locked_pkg.version.clone()));
-        entry.insert("resolved".into(), serde_json::Value::String(locked_pkg.tarball.clone()));
+        entry.insert(
+            "version".into(),
+            serde_json::Value::String(locked_pkg.version.clone()),
+        );
+        entry.insert(
+            "resolved".into(),
+            serde_json::Value::String(locked_pkg.tarball.clone()),
+        );
         if let Some(integrity) = &locked_pkg.integrity {
-            entry.insert("integrity".into(), serde_json::Value::String(integrity.clone()));
+            entry.insert(
+                "integrity".into(),
+                serde_json::Value::String(integrity.clone()),
+            );
         }
         packages.insert(
             format!("node_modules/{}", name),

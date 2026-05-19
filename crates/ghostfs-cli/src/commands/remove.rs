@@ -15,10 +15,7 @@ pub fn run(project_dir: &Path, package: &str) -> Result<()> {
             style("✓").green().bold(),
             style(package).cyan()
         );
-        println!(
-            "  Run {} to update.",
-            style("ghost install").dim()
-        );
+        println!("  Run {} to update.", style("ghost install").dim());
     } else {
         println!(
             "{} Package '{}' not found in dependencies",

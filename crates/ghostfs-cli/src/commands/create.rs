@@ -8,10 +8,7 @@ pub fn run(project_dir: &Path, template: &str, name: &str) -> Result<()> {
     let target = project_dir.join(name);
 
     if target.exists() {
-        anyhow::bail!(
-            "Directory '{}' already exists",
-            target.display()
-        );
+        anyhow::bail!("Directory '{}' already exists", target.display());
     }
 
     println!(
@@ -31,19 +28,9 @@ pub fn run(project_dir: &Path, template: &str, name: &str) -> Result<()> {
     );
     println!();
     println!("  Get started:");
-    println!(
-        "    {} cd {}",
-        style("$").dim(),
-        name
-    );
-    println!(
-        "    {} ghost install",
-        style("$").dim()
-    );
-    println!(
-        "    {} ghost dev",
-        style("$").dim()
-    );
+    println!("    {} cd {}", style("$").dim(), name);
+    println!("    {} ghost install", style("$").dim());
+    println!("    {} ghost dev", style("$").dim());
     println!();
 
     Ok(())
@@ -51,17 +38,10 @@ pub fn run(project_dir: &Path, template: &str, name: &str) -> Result<()> {
 
 /// List available templates.
 pub fn list_templates() -> Result<()> {
-    println!(
-        "{} Available templates:\n",
-        style("📦").bold()
-    );
+    println!("{} Available templates:\n", style("📦").bold());
 
     for (name, desc) in Scaffolder::templates() {
-        println!(
-            "  {:<10} {}",
-            style(name).cyan().bold(),
-            style(desc).dim()
-        );
+        println!("  {:<10} {}", style(name).cyan().bold(), style(desc).dim());
     }
 
     println!();

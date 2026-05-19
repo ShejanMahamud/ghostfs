@@ -103,7 +103,12 @@ impl Installer {
 
         // Verify integrity
         let hash = compute_sha256(&tarball_bytes);
-        debug!("Downloaded {} ({} bytes, sha256={})", pkg.name, tarball_bytes.len(), hash);
+        debug!(
+            "Downloaded {} ({} bytes, sha256={})",
+            pkg.name,
+            tarball_bytes.len(),
+            hash
+        );
 
         // Extract to temp directory
         let temp_dir = tempfile::tempdir()?;

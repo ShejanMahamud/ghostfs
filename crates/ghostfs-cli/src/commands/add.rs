@@ -23,11 +23,7 @@ pub async fn run(project_dir: &Path, package: &str, dev: bool) -> Result<()> {
 
     // Resolve "latest" to actual version
     let resolved_version = if version_req == "latest" {
-        println!(
-            "{} Resolving {}...",
-            style("◌").blue(),
-            style(&name).cyan()
-        );
+        println!("{} Resolving {}...", style("◌").blue(), style(&name).cyan());
         let registry = NpmRegistryClient::new();
         let metadata = registry.get_package_metadata(&name).await?;
         let latest = metadata

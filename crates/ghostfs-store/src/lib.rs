@@ -159,7 +159,9 @@ mod tests {
         std::fs::write(&file_path, "console.log('hello');").unwrap();
 
         // Store it
-        let stored = store.store_package("my-lib", "1.2.3", pkg_src.path()).unwrap();
+        let stored = store
+            .store_package("my-lib", "1.2.3", pkg_src.path())
+            .unwrap();
         assert_eq!(stored.name, "my-lib");
         assert_eq!(stored.version, "1.2.3");
         assert!(stored.size > 0);
@@ -168,9 +170,9 @@ mod tests {
         let dest_path = store.package_path(&stored.hash);
         assert!(dest_path.exists());
         assert!(dest_path.join("index.js").exists());
-        
+
         assert!(store.has_package("my-lib", "1.2.3").unwrap());
-        
+
         let retrieved = store.get_package("my-lib", "1.2.3").unwrap().unwrap();
         assert_eq!(retrieved.hash, stored.hash);
     }

@@ -34,9 +34,7 @@ pub fn hash_directory(path: &Path) -> Result<String> {
 }
 
 fn hash_dir_recursive(base: &Path, current: &Path, hasher: &mut Sha256) -> Result<()> {
-    let mut entries: Vec<_> = std::fs::read_dir(current)?
-        .filter_map(|e| e.ok())
-        .collect();
+    let mut entries: Vec<_> = std::fs::read_dir(current)?.filter_map(|e| e.ok()).collect();
     entries.sort_by_key(|e| e.file_name());
 
     for entry in entries {

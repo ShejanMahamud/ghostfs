@@ -8,10 +8,7 @@ pub fn run() -> Result<()> {
     let packages = store.list_packages()?;
 
     if packages.is_empty() {
-        println!(
-            "{} No packages in the global store yet.",
-            style("ℹ").blue()
-        );
+        println!("{} No packages in the global store yet.", style("ℹ").blue());
         println!("  Run {} to get started.", style("ghost add <pkg>").cyan());
         return Ok(());
     }

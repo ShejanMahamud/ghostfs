@@ -86,8 +86,8 @@ impl Manifest {
     /// Remove a dependency (from either deps or devDeps). Returns true if found.
     pub fn remove_dependency(&mut self, name: &str) -> bool {
         self.dependencies.remove(name).is_some() || self.dev_dependencies.remove(name).is_some()
-     }
- }
+    }
+}
 
 #[cfg(test)]
 mod tests {

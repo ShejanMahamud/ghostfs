@@ -95,20 +95,18 @@ impl Database {
     }
 
     pub fn total_size(&self) -> Result<u64> {
-        let size: i64 = self.conn.query_row(
-            "SELECT COALESCE(SUM(size), 0) FROM packages",
-            [],
-            |row| row.get(0),
-        )?;
+        let size: i64 =
+            self.conn
+                .query_row("SELECT COALESCE(SUM(size), 0) FROM packages", [], |row| {
+                    row.get(0)
+                })?;
         Ok(size as u64)
     }
 
     pub fn package_count(&self) -> Result<u64> {
-        let count: i64 = self.conn.query_row(
-            "SELECT COUNT(*) FROM packages",
-            [],
-            |row| row.get(0),
-        )?;
+        let count: i64 = self
+            .conn
+            .query_row("SELECT COUNT(*) FROM packages", [], |row| row.get(0))?;
         Ok(count as u64)
     }
 
@@ -126,7 +124,7 @@ mod tests {
     fn test_database_lifecycle() {
         // Open an in-memory database
         let db = Database::open(Path::new(":memory:")).unwrap();
-        
+
         // Assert initial state is empty
         assert_eq!(db.package_count().unwrap(), 0);
         assert_eq!(db.total_size().unwrap(), 0);

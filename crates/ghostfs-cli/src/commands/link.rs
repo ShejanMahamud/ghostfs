@@ -6,10 +6,7 @@ use std::path::Path;
 
 /// Link packages from global store into node_modules/.
 pub fn run(project_dir: &Path) -> Result<()> {
-    println!(
-        "{} Linking packages to node_modules/...",
-        style("◌").blue()
-    );
+    println!("{} Linking packages to node_modules/...", style("◌").blue());
 
     let store = ContentStore::new()?;
     let linker = Linker::new(store);
@@ -17,11 +14,7 @@ pub fn run(project_dir: &Path) -> Result<()> {
 
     if !result.errors.is_empty() {
         for err in &result.errors {
-            eprintln!(
-                "  {} {}",
-                style("⚠").yellow(),
-                err
-            );
+            eprintln!("  {} {}", style("⚠").yellow(), err);
         }
     }
 

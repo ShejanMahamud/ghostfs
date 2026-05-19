@@ -8,10 +8,7 @@ pub fn run(force: bool) -> Result<()> {
     let packages = store.list_packages()?;
 
     if packages.is_empty() {
-        println!(
-            "{} Store is already empty.",
-            style("ℹ").blue()
-        );
+        println!("{} Store is already empty.", style("ℹ").blue());
         return Ok(());
     }
 
@@ -24,17 +21,11 @@ pub fn run(force: bool) -> Result<()> {
             packages.len(),
             format_size(total_size)
         );
-        println!(
-            "  Run with {} to confirm.",
-            style("--force").cyan()
-        );
+        println!("  Run with {} to confirm.", style("--force").cyan());
         return Ok(());
     }
 
-    println!(
-        "{} Cleaning global store...",
-        style("◌").blue()
-    );
+    println!("{} Cleaning global store...", style("◌").blue());
 
     // Remove shard directories in store root (e.g. "00" through "ff")
     let store_root = ContentStore::default_store_path()?;

@@ -155,16 +155,8 @@ fn print_status() -> anyhow::Result<()> {
 
     println!("{}", style("👻 GhostFS Status").bold());
     println!();
-    println!(
-        "  {} {}",
-        style("Store:").dim(),
-        store.root().display()
-    );
-    println!(
-        "  {} {}",
-        style("Packages:").dim(),
-        count
-    );
+    println!("  {} {}", style("Store:").dim(), store.root().display());
+    println!("  {} {}", style("Packages:").dim(), count);
     println!(
         "  {} {}",
         style("Total size:").dim(),

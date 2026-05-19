@@ -83,7 +83,11 @@ fn build_node_path(project_dir: &Path) -> Result<String> {
         }
     }
 
-    let separator = if cfg!(target_os = "windows") { ";" } else { ":" };
+    let separator = if cfg!(target_os = "windows") {
+        ";"
+    } else {
+        ":"
+    };
     Ok(paths.join(separator))
 }
 

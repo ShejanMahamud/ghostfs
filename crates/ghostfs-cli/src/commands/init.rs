@@ -35,20 +35,11 @@ pub fn run(project_dir: &Path) -> Result<()> {
         style("✓").green().bold(),
         style(&name).cyan()
     );
-    println!(
-        "  {} ghost.json",
-        style("created").dim()
-    );
+    println!("  {} ghost.json", style("created").dim());
     println!();
     println!("  Next steps:");
-    println!(
-        "    {} ghost add react",
-        style("$").dim()
-    );
-    println!(
-        "    {} ghost install",
-        style("$").dim()
-    );
+    println!("    {} ghost add react", style("$").dim());
+    println!("    {} ghost install", style("$").dim());
 
     Ok(())
 }

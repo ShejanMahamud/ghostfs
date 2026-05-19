@@ -11,10 +11,7 @@ use std::time::Instant;
 pub async fn run(project_dir: &Path) -> Result<()> {
     let start = Instant::now();
 
-    println!(
-        "{} Resolving dependency tree...",
-        style("◌").blue()
-    );
+    println!("{} Resolving dependency tree...", style("◌").blue());
 
     let store = ContentStore::new()?;
     let registry = NpmRegistryClient::new();
