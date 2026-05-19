@@ -29,14 +29,18 @@ try {
         Write-Host "  Error: No binary found for $target" -ForegroundColor Red
         Write-Host "  Available assets:" -ForegroundColor Yellow
         $release.assets | ForEach-Object { Write-Host "    - $($_.name)" -ForegroundColor DarkGray }
-        exit 1
+        return
     }
 
     $downloadUrl = $asset.browser_download_url
 } catch {
     Write-Host "  Error: Could not fetch release info from GitHub." -ForegroundColor Red
-    Write-Host "  $_" -ForegroundColor DarkGray
-    exit 1
+    Write-Host "  Detail: $_" -ForegroundColor DarkGray
+    Write-Host ""
+    Write-Host "  Note: If this is a new repository, please create a GitHub Release first" -ForegroundColor Yellow
+    Write-Host "        with release assets before running the installer." -ForegroundColor Yellow
+    Write-Host ""
+    return
 }
 
 Write-Host "  Version:  $version" -ForegroundColor Green
@@ -62,7 +66,7 @@ Remove-Item $tempZip -Force
 $binaryPath = Join-Path $installDir $binaryName
 if (-not (Test-Path $binaryPath)) {
     Write-Host "  Error: Binary not found after extraction" -ForegroundColor Red
-    exit 1
+    return
 }
 
 # Add to PATH
