@@ -1,10 +1,10 @@
 #!/usr/bin/env pwsh
 # GhostFS Installer for Windows
-# Usage: irm https://raw.githubusercontent.com/shejanmahamud/ghostfs/main/install.ps1 | iex
+# Usage: irm https://raw.githubusercontent.com/ShejanMahamud/ghostfs/main/install.ps1 | iex
 
 $ErrorActionPreference = "Stop"
 
-$repo = "shejanmahamud/ghostfs"
+$repo = "ShejanMahamud/ghostfs"
 $binaryName = "ghost.exe"
 $installDir = "$env:USERPROFILE\.ghostfs\bin"
 

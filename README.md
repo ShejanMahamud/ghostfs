@@ -56,13 +56,13 @@ npm install -g ghostfs
 **Windows (PowerShell):**
 
 ```powershell
-irm https://raw.githubusercontent.com/shejanmahamud/ghostfs/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/ShejanMahamud/ghostfs/main/install.ps1 | iex
 ```
 
 **macOS / Linux:**
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/shejanmahamud/ghostfs/main/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/ShejanMahamud/ghostfs/main/install.sh | sh
 ```
 
 ### From Cargo (Rust users)
@@ -73,7 +73,7 @@ cargo install ghostfs-cli
 
 ### From GitHub Releases
 
-Download the latest binary for your platform from [Releases](https://github.com/shejanmahamud/ghostfs/releases).
+Download the latest binary for your platform from [Releases](https://github.com/ShejanMahamud/ghostfs/releases).
 
 | Platform | Binary |
 |---|---|
@@ -85,7 +85,7 @@ Download the latest binary for your platform from [Releases](https://github.com/
 ### Build from Source
 
 ```bash
-git clone https://github.com/shejanmahamud/ghostfs.git
+git clone https://github.com/ShejanMahamud/ghostfs.git
 cd ghostfs
 cargo build --release
 # Binary at target/release/ghost (or ghost.exe on Windows)
@@ -245,16 +245,16 @@ Built with **Rust** for maximum performance. Uses **Tokio** for async I/O, **SQL
 ## Contributing
 
 ```bash
-git clone https://github.com/shejanmahamud/ghostfs.git
+git clone https://github.com/ShejanMahamud/ghostfs.git
 cd ghostfs
 cargo build
 cargo test
 ```
 
-PRs welcome! See [issues](https://github.com/shejanmahamud/ghostfs/issues) for good first contributions.
+PRs welcome! See [issues](https://github.com/ShejanMahamud/ghostfs/issues) for good first contributions.
 
 ---
 
 ## License
 
-MIT © [Shejan Mahamud](https://github.com/shejanmahamud)
+MIT © [Shejan Mahamud](https://github.com/ShejanMahamud)

@@ -17,16 +17,16 @@
     "dependencies",
     "virtualization"
   ],
-  "author": "Shejan Mahamud <shejanmahamud@gmail.com>",
+  "author": "Shejan Mahamud <ShejanMahamud@gmail.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shejanmahamud/ghostfs.git"
+    "url": "git+https://github.com/ShejanMahamud/ghostfs.git"
   },
   "bugs": {
-    "url": "https://github.com/shejanmahamud/ghostfs/issues"
+    "url": "https://github.com/ShejanMahamud/ghostfs/issues"
   },
-  "homepage": "https://github.com/shejanmahamud/ghostfs#readme",
+  "homepage": "https://github.com/ShejanMahamud/ghostfs#readme",
   "optionalDependencies": {
     "ghostfs-win32-x64": "0.1.0",
     "ghostfs-darwin-x64": "0.1.0",

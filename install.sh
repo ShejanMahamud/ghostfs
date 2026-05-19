@@ -1,10 +1,10 @@
 #!/bin/sh
 # GhostFS Installer for macOS / Linux
-# Usage: curl -fsSL https://raw.githubusercontent.com/shejanmahamud/ghostfs/main/install.sh | sh
+# Usage: curl -fsSL https://raw.githubusercontent.com/ShejanMahamud/ghostfs/main/install.sh | sh
 
 set -e
 
-REPO="shejanmahamud/ghostfs"
+REPO="ShejanMahamud/ghostfs"
 BINARY_NAME="ghost"
 INSTALL_DIR="$HOME/.ghostfs/bin"
 
