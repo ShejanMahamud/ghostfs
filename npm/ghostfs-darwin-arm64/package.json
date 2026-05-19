@@ -1,0 +1,12 @@
+{
+  "name": "ghostfs-darwin-arm64",
+  "version": "0.1.0",
+  "description": "macOS Apple Silicon ARM64 binary for GhostFS",
+  "os": [
+    "darwin"
+  ],
+  "cpu": [
+    "arm64"
+  ],
+  "license": "MIT"
+}

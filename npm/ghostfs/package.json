@@ -1,0 +1,36 @@
+{
+  "name": "ghostfs",
+  "version": "0.1.0",
+  "description": "Dependency Virtualization Engine for JavaScript — eliminate node_modules forever",
+  "main": "index.js",
+  "bin": {
+    "ghost": "./bin/ghost"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "npm",
+    "node",
+    "package-manager",
+    "javascript",
+    "dependencies",
+    "virtualization"
+  ],
+  "author": "Shejan Mahamud <shejanmahamud@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shejanmahamud/ghostfs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shejanmahamud/ghostfs/issues"
+  },
+  "homepage": "https://github.com/shejanmahamud/ghostfs#readme",
+  "optionalDependencies": {
+    "ghostfs-win32-x64": "0.1.0",
+    "ghostfs-darwin-x64": "0.1.0",
+    "ghostfs-darwin-arm64": "0.1.0",
+    "ghostfs-linux-x64": "0.1.0"
+  }
+}

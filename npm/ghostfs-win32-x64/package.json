@@ -1,0 +1,12 @@
+{
+  "name": "ghostfs-win32-x64",
+  "version": "0.1.0",
+  "description": "Windows x64 binary for GhostFS",
+  "os": [
+    "win32"
+  ],
+  "cpu": [
+    "x64"
+  ],
+  "license": "MIT"
+}

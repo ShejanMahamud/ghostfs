@@ -1,0 +1,4 @@
+/target
+*.lock
+!ghost.lock
+!Cargo.lock

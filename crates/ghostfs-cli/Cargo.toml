@@ -1,0 +1,30 @@
+[package]
+name = "ghostfs-cli"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+description = "CLI for GhostFS — Dependency Virtualization Engine for JavaScript"
+keywords = ["npm", "node", "package-manager", "javascript", "dependencies"]
+categories = ["command-line-utilities", "development-tools"]
+readme = "../../README.md"
+
+[[bin]]
+name = "ghost"
+path = "src/main.rs"
+
+[dependencies]
+ghostfs-core = { path = "../ghostfs-core", version = "0.1.0" }
+ghostfs-store = { path = "../ghostfs-store", version = "0.1.0" }
+ghostfs-registry = { path = "../ghostfs-registry", version = "0.1.0" }
+clap = { version = "4", features = ["derive"] }
+tokio = { version = "1", features = ["full"] }
+anyhow = "1"
+console = "0.15"
+indicatif = "0.17"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+serde_json = "1"
+dirs = "5"
