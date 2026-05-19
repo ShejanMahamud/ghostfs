@@ -107,19 +107,67 @@ impl DependencyResolver {
             }
         }
 
-        // Parse as semver range
-        let version_req = VersionReq::parse(req_str).with_context(|| {
-            format!(
-                "Invalid version requirement '{}' for {}",
-                req_str, metadata.name
-            )
-        })?;
+        // Parse one or more semver requirements, handling npm-specific range format
+        let mut parsed_reqs = Vec::new();
+        for alt in req_str.split("||") {
+            // Convert hyphen ranges: "1.2.3 - 2.3.4" -> ">=1.2.3 <=2.3.4"
+            let mut normalized = alt.trim().to_string();
+            if let Some((left, right)) = normalized.split_once(" - ") {
+                normalized = format!(">={} <={}", left.trim(), right.trim());
+            }
+
+            // Remove spaces after operators
+            for op in &[">=", "<=", ">", "<", "=", "^", "~"] {
+                normalized = normalized.replace(&format!("{} ", op), op);
+            }
+
+            // Split into parts by whitespace to clean up and strip 'v' prefix
+            let parts: Vec<&str> = normalized.split_whitespace().collect();
+            let mut final_parts = Vec::new();
+            for part in parts {
+                let mut cleaned = part.to_string();
+                if cleaned.starts_with('v')
+                    && cleaned.chars().nth(1).is_some_and(|c| c.is_ascii_digit())
+                {
+                    cleaned = cleaned[1..].to_string();
+                }
+                for op in &[">=", "<=", ">", "<", "=", "^", "~"] {
+                    if cleaned.starts_with(op) {
+                        let op_len = op.len();
+                        if cleaned[op_len..].starts_with('v')
+                            && cleaned[op_len + 1..]
+                                .chars()
+                                .next()
+                                .is_some_and(|c| c.is_ascii_digit())
+                        {
+                            cleaned = format!("{}{}", op, &cleaned[op_len + 1..]);
+                        }
+                    }
+                }
+                final_parts.push(cleaned);
+            }
+
+            let joined = final_parts.join(",");
+            if let Ok(req) = VersionReq::parse(&joined) {
+                parsed_reqs.push(req);
+            }
+        }
+
+        if parsed_reqs.is_empty() {
+            // Fall back to direct parse to produce standard parse error
+            let _ = VersionReq::parse(req_str).with_context(|| {
+                format!(
+                    "Invalid version requirement '{}' for {}",
+                    req_str, metadata.name
+                )
+            })?;
+        }
 
         let mut matching_versions: Vec<Version> = metadata
             .versions
             .keys()
             .filter_map(|v| Version::parse(v).ok())
-            .filter(|v| version_req.matches(v))
+            .filter(|v| parsed_reqs.iter().any(|req| req.matches(v)))
             .collect();
 
         matching_versions.sort();
